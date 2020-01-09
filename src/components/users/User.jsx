@@ -1,21 +1,16 @@
 import React, { Component, Fragment } from 'react';
-import { Spinner } from '../layout/Spinner';
+import Spinner from '../layout/Spinner';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import Repos from '../repos/Repos';
 
-export class User extends Component {
+class User extends Component {
     componentDidMount() {
-        this.props.getUser(this.props.match.params.login);
-        this.props.getUserRepos(this.props.match.params.login);
+        const { login } = this.props.match.params;
+        this.props.getUser(login);
+        this.props.getUserRepos(login);
     }
-    static proptTypes = {
-        loading: PropTypes.bool,
-        user: PropTypes.object.isRequired,
-        getUser: PropTypes.func.isRequired,
-        repos: PropTypes.array.isRequired,
-        getUserRepos: PropTypes.func.isRequired
-    };
+
     render() {
         const {
             loading,
@@ -51,7 +46,7 @@ export class User extends Component {
                 )}
                 <div className='card grid-2'>
                     <div className='all-center'>
-                        <img src={avatar_url} className='round-img' style={{ width: '150px' }} alt='' />
+                        <img src={avatar_url} className='round-img' style={style} alt='' />
                         <h1>{name}</h1>
                         <p>Location: {location}</p>
                     </div>
@@ -101,5 +96,17 @@ export class User extends Component {
         );
     }
 }
+
+const style = {
+    width: '150px'
+};
+
+User.proptTypes = {
+    loading: PropTypes.bool,
+    user: PropTypes.object.isRequired,
+    getUser: PropTypes.func.isRequired,
+    repos: PropTypes.array.isRequired,
+    getUserRepos: PropTypes.func.isRequired
+};
 
 export default User;

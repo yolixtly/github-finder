@@ -6,7 +6,7 @@ import Users from './components/users/Users';
 import axios from 'axios';
 import Alert from './components/layout/Alert';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { About } from './components/pages/About';
+import About from './components/pages/About';
 import User from './components/users/User';
 class App extends React.Component {
   state = {
@@ -16,58 +16,56 @@ class App extends React.Component {
     loading: false,
     alert: null
   }
-
   searchUsers = async text => {
     this.setState({
       loading: true
     });
 
-    let url = `https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-    await axios.get(url).then(res => {
+    let url = 'https://api.github.com/search/users?' +
+      `q=${text}&` +
+      `client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&` +
+      `client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`;
 
-      setTimeout(() => {
-        this.setState({
-          loading: false,
-          users: res.data.items
-        });
-      }, 500);
+    await axios.get(url).then(res => {
+      this.setState({
+        loading: false,
+        users: res.data.items
+      });
     });
   }
-
   getUser = async (username) => {
     this.setState({
       loading: true
     });
 
-    let url = `https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-    await axios.get(url).then(res => {
+    let url = `https://api.github.com/users/${username}?` +
+      `client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&` +
+      `client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`;
 
-      setTimeout(() => {
-        this.setState({
-          loading: false,
-          user: res.data
-        });
-      }, 500);
+    await axios.get(url).then(res => {
+      this.setState({
+        loading: false,
+        user: res.data
+      });
     });
   }
-
   getUserRepos = async (username) => {
     this.setState({
       loading: true
     });
 
-    let url = `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-    await axios.get(url).then(res => {
+    let url = `https://api.github.com/users/${username}/repos?` +
+      `per_page=5&sort=created:asc&` +
+      `client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&` +
+      `client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`;
 
-      setTimeout(() => {
-        this.setState({
-          loading: false,
-          repos: res.data
-        });
-      }, 500);
+    await axios.get(url).then(res => {
+      this.setState({
+        loading: false,
+        repos: res.data
+      });
     });
   }
-
   clearUsers = () => {
     this.setState({
       users: [],
@@ -116,7 +114,12 @@ class App extends React.Component {
               <Route
                 exact path="/user/:login"
                 render={props => (
-                  <User {...props} getUser={this.getUser} user={user} getUserRepos={this.getUserRepos} repos={repos} loading={loading} />
+                  <User {...props}
+                    getUser={this.getUser}
+                    user={user}
+                    getUserRepos={this.getUserRepos}
+                    repos={repos}
+                    loading={loading} />
                 )} />
             </Switch>
           </div>
