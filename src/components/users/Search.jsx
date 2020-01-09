@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export class Search extends Component {
+class Search extends Component {
     state = {
         text: ''
     };
 
-    static propTypes = {
-        searchUsers: PropTypes.func.isRequired,
-        clearUsers: PropTypes.func.isRequired,
-        showClear: PropTypes.bool.isRequired,
-        setAlert: PropTypes.func.isRequired,
-    };
     onChange = e => {
         // target.name points to the value on the input tag name (text)
         this.setState({
@@ -25,7 +19,7 @@ export class Search extends Component {
             this.props.setAlert('Please enter something', 'light');
             return;
         }
-        console.log('shouldnt');
+
         this.props.searchUsers(this.state.text);
         this.setState({
             text: ''
@@ -54,5 +48,12 @@ export class Search extends Component {
         );
     }
 }
+
+Search.propTypes = {
+    searchUsers: PropTypes.func.isRequired,
+    clearUsers: PropTypes.func.isRequired,
+    showClear: PropTypes.bool.isRequired,
+    setAlert: PropTypes.func.isRequired
+};
 
 export default Search;
