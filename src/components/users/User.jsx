@@ -1,14 +1,15 @@
 import React, { Fragment, useEffect, useContext } from 'react';
 import Spinner from '../layout/Spinner';
-import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import Repos from '../repos/Repos';
 import GithubContext from '../../context/github/githubContext';
 
-const User = ({ loading, repos, getUserRepos, match }) => {
+const User = ({ loading, match }) => {
     const githubContext = useContext(GithubContext);
     const {
         getUser,
+        getUserRepos,
+        repos,
         user: {
             name,
             avatar_url,
@@ -98,13 +99,6 @@ const User = ({ loading, repos, getUserRepos, match }) => {
 
 const style = {
     width: '150px'
-};
-
-User.proptTypes = {
-    loading: PropTypes.bool,
-    user: PropTypes.object.isRequired,
-    repos: PropTypes.array.isRequired,
-    getUserRepos: PropTypes.func.isRequired
 };
 
 export default User;
