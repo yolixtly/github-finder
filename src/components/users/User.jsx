@@ -1,31 +1,31 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useContext } from 'react';
 import Spinner from '../layout/Spinner';
-import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import Repos from '../repos/Repos';
+import GithubContext from '../../context/github/githubContext';
 
-const User = ({
-    loading,
-    repos,
-    getUser,
-    getUserRepos,
-    match,
-    user: {
-        name,
-        avatar_url,
-        company,
-        location,
-        bio,
-        blog,
-        login,
-        html_url,
-        followers,
-        following,
-        public_repos,
-        public_gists,
-        hireable
-    }
-}) => {
+const User = ({ loading, match }) => {
+    const githubContext = useContext(GithubContext);
+    const {
+        getUser,
+        getUserRepos,
+        repos,
+        user: {
+            name,
+            avatar_url,
+            company,
+            location,
+            bio,
+            blog,
+            login,
+            html_url,
+            followers,
+            following,
+            public_repos,
+            public_gists,
+            hireable
+        }
+    } = githubContext;
     useEffect(() => {
         const { login } = match.params;
         getUser(login);
@@ -99,14 +99,6 @@ const User = ({
 
 const style = {
     width: '150px'
-};
-
-User.proptTypes = {
-    loading: PropTypes.bool,
-    user: PropTypes.object.isRequired,
-    getUser: PropTypes.func.isRequired,
-    repos: PropTypes.array.isRequired,
-    getUserRepos: PropTypes.func.isRequired
 };
 
 export default User;
