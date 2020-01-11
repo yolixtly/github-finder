@@ -10,6 +10,7 @@ import User from './components/users/User';
 import GithubState from './context/github/githubState';
 import AlertState from './context/alert/alertState';
 import Home from './components/pages/Home';
+import NotFound from './components/pages/NotFound';
 const App = () => {
   return (
     <GithubState>
@@ -24,6 +25,7 @@ const App = () => {
                 </Route>
                 <Route exact path="/about" component={About} />
                 <Route exact path="/user/:login" component={User} />
+                <Route component={NotFound} />
               </Switch>
             </div>
           </div>
